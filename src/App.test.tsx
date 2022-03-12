@@ -4,6 +4,6 @@ import App from "./App";
 
 test("renders without crashing", () => {
     render(<App />);
-    const pageTitle = screen.getByText("Sleep Calculator");
+    const pageTitle = screen.getByText("SLEEP CALCULATOR");
     expect(pageTitle).toBeInTheDocument();
 });
