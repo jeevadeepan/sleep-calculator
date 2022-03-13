@@ -1,3 +1,4 @@
+import fetchMock from "jest-fetch-mock";
 import React from "react";
 import {
     fireEvent,
@@ -55,6 +56,14 @@ test("calculate button is enabled after durations are selected", async () => {
 });
 
 test("displays loading text when score is being calculated", async () => {
+    fetchMock.mockResponse(
+        () =>
+            new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve("success");
+                }, 2000);
+            })
+    );
     render(<SleepScore />);
     await selectDuration(480, 360);
 
@@ -67,7 +76,8 @@ test("displays loading text when score is being calculated", async () => {
     expect(screen.getByText("Loading ...")).toBeInTheDocument();
 });
 
-test("computes and displays sleep score when calculat is clicked", async () => {
+test("computes and displays sleep score when calculate is clicked and API call succeeds", async () => {
+    fetchMock.mockResponse("success");
     render(<SleepScore />);
     await selectDuration(480, 360);
 
@@ -85,4 +95,22 @@ test("computes and displays sleep score when calculat is clicked", async () => {
             timeout: 2200,
         }
     );
+});
+
+test("displays error message when API call fails", async () => {
+    fetchMock.mockReject(new Error("server error"));
+    render(<SleepScore />);
+    await selectDuration(720, 480);
+
+    await waitFor(() => {
+        expect(
+            screen.getByRole("button", { name: "Calculate" })
+        ).not.toBeDisabled();
+    });
+    await user.click(screen.getByRole("button", { name: "Calculate" }));
+    await waitFor(() => {
+        expect(
+            screen.getByText("Unable to calculate score at this time!")
+        ).toBeInTheDocument();
+    });
 });

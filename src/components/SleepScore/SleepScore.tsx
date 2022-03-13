@@ -63,7 +63,7 @@ function SleepScore() {
         }
     }, [bedDuration, asleepDuration]);
 
-    const onCalculateHandler = () => {
+    const onCalculateHandler = async () => {
         setPageState(PageStates.Loading);
         const score = Math.min(
             Math.round(
@@ -71,10 +71,25 @@ function SleepScore() {
             ),
             100
         );
-        setTimeout(() => {
-            setProgressPercent(score);
-            setPageState(PageStates.Success);
-        }, 2000);
+        try {
+            const response = await fetch(
+                "https://us-central1-fleet-radar-299112.cloudfunctions.net/mock-server",
+                {
+                    method: "POST",
+                    body: JSON.stringify({ score }),
+                    mode: "cors",
+                }
+            );
+
+            if (response.ok) {
+                setProgressPercent(score);
+                setPageState(PageStates.Success);
+            } else {
+                setPageState(PageStates.Error);
+            }
+        } catch (err) {
+            setPageState(PageStates.Error);
+        }
     };
 
     return (
