@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## To run in local
+
+1. Install [NodeJS](https://nodejs.org/en/download/)
+2. npm install
+3. npm start
+
+## [Demo Link](https://sleep-calculator-orpin.vercel.app/)
+
 ## Available Scripts
 
 In the project directory, you can run:
