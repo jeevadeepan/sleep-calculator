@@ -35,10 +35,10 @@ const StyledDisplayProgressText = styled.p`
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 5rem;
+    font-size: 3rem;
 `;
 
-const StyledDisplayText = styled.p`
+const StyledDisplayText = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
@@ -48,6 +48,9 @@ const StyledDisplayText = styled.p`
     align-items: center;
     justify-content: center;
     text-align: center;
+    > p {
+        max-width: 50%;
+    }
 `;
 
 const ForegroundRing = styled.svg``;
@@ -58,7 +61,7 @@ function ProgressRing({
     isError,
     isInitial,
 }: ProgressRingProps) {
-    const radius = 169.5;
+    const radius = 120;
     const stroke = 8;
     const normalizedRadius = radius - stroke * 2;
     const circumference = normalizedRadius * 2 * Math.PI;
@@ -73,14 +76,14 @@ function ProgressRing({
         if (isError) {
             return (
                 <StyledDisplayText>
-                    Unable to calculate score at this time!
+                    <p>Unable to calculate score at this time!</p>
                 </StyledDisplayText>
             );
         }
         if (isInitial) {
             return (
                 <StyledDisplayText>
-                    Select duration to calculate score
+                    <p>Select duration to calculate score</p>
                 </StyledDisplayText>
             );
         }

@@ -13,7 +13,6 @@ const Container = styled.div`
         padding-top: 1rem;
         display: flex;
         flex-direction: column;
-        grid
     `;
 
 const Title = styled.h1`

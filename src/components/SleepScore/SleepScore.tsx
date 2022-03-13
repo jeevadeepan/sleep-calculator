@@ -16,8 +16,10 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
+    max-height: 80%;
     padding: 1rem;
     align-items: center;
+    justify-content: space-around;
     > * {
         margin-bottom: 2rem;
     }
